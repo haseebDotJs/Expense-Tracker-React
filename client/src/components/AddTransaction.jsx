@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import {  useContext } from 'react'
 import { GlobalState } from '../Context/GlobalState'
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,7 +15,7 @@ export const AddTransaction = () => {
     const { handleSubmit, reset, register, errors } = useForm({
         resolver: yupResolver(schema),
     });
-    console.log('errors', errors);
+
     const { addTransaction, error } = useContext(GlobalState)
 
     const onSubmit = (transaction) => {

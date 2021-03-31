@@ -50,7 +50,6 @@ export default function Login() {
     reset()
     localStorage.setItem('token', res.token)
     const verified = await verifyUserLogin()
-    console.log('verified', verified);
     if (verified) {
       setLogin(true)
     }

@@ -4,7 +4,6 @@ import { numberWithCommas } from '../utils/format'
 
 export const Transaction = ({ transaction }) => {
     const sign = transaction.type === 'income' ? '+' : '-'
-    console.log('transaction in transaction', transaction);
     const { deleteTransaction } = useContext(GlobalState)
     return (
         <li key={transaction._id} className={ transaction.type === 'income' ? 'plus' : 'minus'}>

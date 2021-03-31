@@ -5,9 +5,7 @@ import { Loading } from './Loading'
 
 export const TransactionList = () => {
     const { transactions, getTransactions ,loading} = useContext(GlobalState)
-    console.log('transactionsList', transactions);
     useEffect(() => {
-        console.log('i am getting transactions again');
         getTransactions()
         // eslint-disable-next-line
     }, [])

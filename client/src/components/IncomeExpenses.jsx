@@ -4,7 +4,6 @@ import {numberWithCommas} from './utils/format'
 
 export const IncomeExpenses = () => {
     const { transactions } = useContext(GlobalState)
-    console.log('transactions total', transactions);
     const income = transactions
         .filter((transaction) => transaction.type === 'income')
         .reduce((acc, transaction) => acc + transaction.amount, 0)
