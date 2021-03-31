@@ -1,19 +1,24 @@
 import React, { useContext } from 'react'
 import { GlobalState } from '../Context/GlobalState'
-import {numberWithCommas} from './utils/format'
+import { numberWithCommas } from './utils/format'
 
 export const Balance = () => {
     const { transactions } = useContext(GlobalState)
-    console.log('trans', transactions);
-    const amounts = transactions.map(transaction => transaction.amount)
-    const total = amounts.reduce((acc, amount) => acc + amount, 0).toFixed(2)
+    
+    const income = transactions
+        .filter((transaction) => transaction.type === 'income')
+        .reduce((acc, transaction) => acc + transaction.amount, 0)
 
-    console.log('amount', amounts);
-    console.log('total', total);
+    const expense = Math.abs(transactions
+        .filter(transaction => transaction.type === 'expense')
+        .reduce((acc, transaction) => acc + transaction.amount, 0)
+    )
+
+    const total = income - expense
     return (
-        <div style={{marginTop: '10px'}}>
+        <div style={{ marginTop: '10px' }}>
             <h4>Your Balance</h4>
-            <h1>${numberWithCommas(total)}</h1>
+            <h1>{numberWithCommas(total)} RS</h1>
         </div>
     )
 }

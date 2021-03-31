@@ -76,7 +76,7 @@ h4 {
   margin: 10px 0;
 }
 
-.inputNumber, .inputText {
+.inputNumber, .inputText , #type{
   border: 1px solid #dedede;
   border-radius: 2px;
   display: block;

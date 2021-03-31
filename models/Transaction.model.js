@@ -12,6 +12,10 @@ const TransactionModel = new mongoose.Schema({
         trim: true,
         required: [true, 'Please provide a positive or negative number']
     },
+    type: {
+        type: String,
+        required: [true, 'Please provide transaction type']
+    },
     createdAt: {
         type: Date,
         default: Date.now

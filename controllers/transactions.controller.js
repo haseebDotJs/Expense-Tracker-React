@@ -33,15 +33,15 @@ exports.getTransactions = async (req, res) => {
 // @access Public
 exports.addTransaction = async (req, res) => {
     try {
-        const { text, amount } = req.body
-
+        const { text, amount,type } = req.body
+console.log('type',type);
         const keys = Object.keys(req.body)
         // check empty body 
         if (keys.length < 1) {
             return res.status(400).json({ success: false, message: 'Fields required in body' });
         }
 
-        const allowedKeys = ["text", "amount"];
+        const allowedKeys = ["text", "amount","type"];
         // making sure any other unrequired key should not come
         const isValidKeys1 = keys.every((update) => allowedKeys.includes(update));
         if (!isValidKeys1) {
@@ -58,6 +58,7 @@ exports.addTransaction = async (req, res) => {
         const transaction = await TransactionModel.create({
             text,
             amount,
+            type,
             createdBy: req.user.id,
         })
         await transaction.save()
@@ -87,6 +88,9 @@ exports.deleteTransaction = async (req, res) => {
 
         // finding if task exist and is the task of particular user
         const transaction = await TransactionModel.findById(id)
+        console.log("createdBy",  transaction.createdBy);
+        console.log("createdBy type", typeof transaction.createdBy);
+        console.log("id", typeof req.user.id);
         console.log("transaction.createdBy !== req.user.id", transaction.createdBy !== req.user.id);
         console.log("req.user.id", req.user.id);
         if (!transaction) {
@@ -97,7 +101,7 @@ exports.deleteTransaction = async (req, res) => {
                 }
             )
         }
-        if (transaction.createdBy !== req.user.id) {
+        if (transaction.createdBy.toString() !== req.user.id) {
             return res.status(400).json(
                 { success: false, message: "You can't delete other user's transactions" }
             )

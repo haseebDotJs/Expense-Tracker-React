@@ -60,7 +60,7 @@ const SignUp = () => {
     const { signupUser } = useContext(GlobalState)
     const navigate = useNavigate()
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data) => { 
         const res = await signupUser(data)
         if (!res.success) {
             setBackendErr(res.message)
