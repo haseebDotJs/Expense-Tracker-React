@@ -1,10 +1,11 @@
-import {  useContext } from 'react'
+import { useContext, useState } from 'react'
 import { GlobalState } from '../Context/GlobalState'
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
 
 export const AddTransaction = () => {
+    const [type, setType] = useState('expense')
     const schema = Yup.object().shape({
         text: Yup
             .string()
@@ -19,7 +20,7 @@ export const AddTransaction = () => {
     const { addTransaction, error } = useContext(GlobalState)
 
     const onSubmit = (transaction) => {
-        const { text, amount, type } = transaction
+        const { text, amount} = transaction
         const newTransaction = {
             text,
             amount: amount,
@@ -46,7 +47,7 @@ export const AddTransaction = () => {
                     </label>
                     <div style={{ display: 'flex' }}>
                         <input name="amount" className="inputNumber" type="number" placeholder="Enter amount..." ref={register} min="1" required />
-                        <select name="type" id="type" defaultValue={'expense'} ref={register}>
+                        <select name="type" id="type" value={type} onChange={(e) => setType(e.target.value)}>
                             <option value="income">Income</option>
                             <option value="expense">Expense</option>
                         </select>
