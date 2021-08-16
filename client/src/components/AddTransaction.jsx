@@ -19,8 +19,8 @@ export const AddTransaction = () => {
 
     const { addTransaction, error } = useContext(GlobalState)
 
-    const onSubmit = (transaction) => {
-        const { text, amount} = transaction
+    const onSubmit =  (transaction) => {
+        const { text, amount } = transaction
         const newTransaction = {
             text,
             amount: amount,

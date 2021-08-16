@@ -88,11 +88,11 @@ exports.deleteTransaction = async (req, res) => {
 
         // finding if task exist and is the task of particular user
         const transaction = await TransactionModel.findById(id)
-        console.log("createdBy",  transaction.createdBy);
-        console.log("createdBy type", typeof transaction.createdBy);
-        console.log("id", typeof req.user.id);
-        console.log("transaction.createdBy !== req.user.id", transaction.createdBy !== req.user.id);
-        console.log("req.user.id", req.user.id);
+        // console.log("createdBy",  transaction.createdBy);
+        // console.log("createdBy type", typeof transaction.createdBy);
+        // console.log("id", typeof req.user.id);
+        // console.log("transaction.createdBy !== req.user.id", transaction.createdBy !== req.user.id);
+        // console.log("req.user.id", req.user.id);
         if (!transaction) {
             return res.status(404).json(
                 {
@@ -120,5 +120,21 @@ exports.deleteTransaction = async (req, res) => {
             message: 'Internal Server Error',
             error: error.message
         })
+    }
+}
+exports.deleteAll = async (req, res) => {
+    try {
+        const { id } = req.user
+        console.log('id', id);
+        // const deleteAllTodos = await TodoModel.findByIdAndDelete(id)
+        const deleteAllTransactions = await TransactionModel.deleteMany({ createdBy: id })
+        res.send({ success: true, message: "All todos deleted successfully", deleteAllTransactions })
+    } catch (error) {
+        console.log('Error:', error.message);
+        res.status(500).json({
+            message: "Internal server error",
+            success: false,
+            error: error.message
+        });
     }
 }

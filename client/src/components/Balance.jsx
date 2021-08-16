@@ -1,10 +1,12 @@
 import React, { useContext } from 'react'
 import { GlobalState } from '../Context/GlobalState'
-import { numberWithCommas } from './utils/format'
+// import { numberWithCommas } from './utils/format'
+// import { Loading } from './Transactions/Loading'
+import CountUp from 'react-countup';
 
 export const Balance = () => {
-    const { transactions } = useContext(GlobalState)
-    
+    const { transactions, loading } = useContext(GlobalState)
+    console.log('transactions', transactions);
     const income = transactions
         .filter((transaction) => transaction.type === 'income')
         .reduce((acc, transaction) => acc + transaction.amount, 0)
@@ -16,9 +18,17 @@ export const Balance = () => {
 
     const total = income - expense
     return (
-        <div style={{ marginTop: '10px' }}>
+        <div >
             <h4>Your Balance</h4>
-            <h1>{numberWithCommas(total)} RS</h1>
+            <div >
+                {
+                    loading ?
+                        <h1>Loading...</h1>
+                        :
+                        <h1><CountUp end={total} separator="," duration={1} /> RS</h1>
+
+                }
+            </div>
         </div>
     )
 }

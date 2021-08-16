@@ -7,9 +7,9 @@ export const Transaction = ({ transaction }) => {
     const { deleteTransaction } = useContext(GlobalState)
     const [disableButton, setDisableButton] = useState(false)
 
-    const handleDelete = () => {
-        setDisableButton(true)
-        deleteTransaction(transaction._id)
+    const handleDelete =  () => {
+         setDisableButton(true)
+         deleteTransaction(transaction._id)
     }
     return (
         <li key={transaction._id} className={transaction.type === 'income' ? 'plus' : 'minus'}>

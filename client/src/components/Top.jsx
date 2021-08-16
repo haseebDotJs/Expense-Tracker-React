@@ -7,7 +7,7 @@ export const Top = () => {
 
     return (
         <div>
-            <h1 style={{textAlign: 'center'}}>{userInfo.firstName} {userInfo.lastName}</h1>
+            <h1 style={{textAlign: 'center',marginBottom: '30px'}}>{userInfo.firstName} {userInfo.lastName}</h1>
         </div>
     )
 }

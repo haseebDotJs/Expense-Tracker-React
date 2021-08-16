@@ -1,3 +1,8 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "files.associations": {
+        "LOOPLONG.C": "cpp",
+        "SWITCH.C": "cpp",
+        "SWITCHLONG.C": "cpp"
+    }
 }

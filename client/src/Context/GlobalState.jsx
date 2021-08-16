@@ -7,8 +7,9 @@ import jwt from 'jsonwebtoken'
 export const initialState = {
     transactions: [],
     error: null,
-    loading: false
+    loading: true
 }
+
 export const GlobalState = createContext(initialState)
 
 
@@ -21,7 +22,7 @@ export const GlobalProvider = ({ children }) => {
         let jwt_secret = "thisIsMySecret"
         let token = localStorage.getItem('token')
         let returnThis = false
-        
+
         if (token) {
             // token will only be decoded when there is no error, expiry or wrong token will not be decoded so token will remain undefined
             jwt.verify(token, jwt_secret, function (err, decoded) {
@@ -76,6 +77,7 @@ export const GlobalProvider = ({ children }) => {
             if (verified) {
                 const res = await axios.get('/api/v1/transactions', config)
                 const { data } = res.data
+                console.log('get data', data);
                 dispatch({
                     type: ACTIONS.GET__TRANSACTIONS,
                     payload: data
@@ -85,7 +87,8 @@ export const GlobalProvider = ({ children }) => {
             }
         }
         catch (error) {
-            const resolveErrorMessage = await error.response.data.message
+            console.log('error', error);
+            const resolveErrorMessage = await error
             dispatch({
                 type: ACTIONS.TRANSACTION__ERROR,
                 payload: resolveErrorMessage
@@ -129,10 +132,11 @@ export const GlobalProvider = ({ children }) => {
                 "x-auth-token": localStorage.getItem('token')
             }
         }
+
         try {
             const verified = verifyUserLogin()
             if (verified) {
-                await axios.delete(`/api/v1/transactions/${id}`, config)
+                await axios.delete(`/api/v1/transactions/delete/${id}`, config)
                 dispatch({ type: ACTIONS.DELETE__TRANSACTION, payload: id })
             }
             else {
@@ -148,12 +152,48 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
+    const deleteAllTransactions = async () => {
+        console.log('i am deleting all');
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                "x-auth-token": localStorage.getItem('token')
+            }
+        }
 
+        try {
+            const verified = verifyUserLogin()
+            if (verified) {
+                await axios.delete(`/api/v1/transactions/delete-all`, config)
+                dispatch({ type: ACTIONS.DELETE__ALL, payload: [] })
+            }
+            else {
+                setLogin(false)
+            }
+
+        } catch (error) {
+            const resolveErrorMessage = await error.response.data.message
+            dispatch({
+                type: ACTIONS.TRANSACTION__ERROR,
+                payload: resolveErrorMessage
+            })
+        }
+    }
+    const loadTrue = () => {
+        dispatch({
+            type: ACTIONS.LOAD,
+            payload: true
+        })
+    }
+    // setTimeout(() => {
+    //     deleteAllTransactions()
+    // }, 5000);
     return (
         <GlobalState.Provider value={{
             loginUser,
             signupUser,
             verifyUserLogin,
+            loadTrue,
             login: [login, setLogin],
             userInfo: [userInfo, setUserInfo],
             transactions: state.transactions,
@@ -161,7 +201,8 @@ export const GlobalProvider = ({ children }) => {
             loading: state.loading,
             getTransactions,
             addTransaction,
-            deleteTransaction
+            deleteTransaction,
+            deleteAllTransactions
         }}>
             {children}
         </GlobalState.Provider>
