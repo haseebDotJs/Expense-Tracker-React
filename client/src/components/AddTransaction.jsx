@@ -10,7 +10,7 @@ export const AddTransaction = () => {
         text: Yup
             .string()
             .min(3, "Minimum 3 characters required")
-            .max(16, "Maximum 16 characters allowed"),
+            .max(16, "Maximum 100 characters allowed"),
     })
 
     const { handleSubmit, reset, register, errors } = useForm({
