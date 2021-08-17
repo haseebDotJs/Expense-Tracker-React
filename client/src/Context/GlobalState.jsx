@@ -185,6 +185,12 @@ export const GlobalProvider = ({ children }) => {
             payload: true
         })
     }
+    const logout = () => {
+        dispatch({
+            type: ACTIONS.LOGOUT,
+            payload: true
+        })
+    }
     // setTimeout(() => {
     //     deleteAllTransactions()
     // }, 5000);
@@ -194,6 +200,7 @@ export const GlobalProvider = ({ children }) => {
             signupUser,
             verifyUserLogin,
             loadTrue,
+            logout,
             login: [login, setLogin],
             userInfo: [userInfo, setUserInfo],
             transactions: state.transactions,

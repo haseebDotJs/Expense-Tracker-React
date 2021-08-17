@@ -1,0 +1,1 @@
+npm run dev to run backend and frontend concurrently

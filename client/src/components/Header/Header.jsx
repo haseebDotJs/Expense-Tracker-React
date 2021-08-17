@@ -32,7 +32,7 @@ export const Header = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
-    const { login: [, setLogin] } = useContext(GlobalState)
+    const { login: [, setLogin],logout } = useContext(GlobalState)
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -43,6 +43,7 @@ export const Header = () => {
     };
     const handleLogout = () => {
         handleClose()
+        logout()
         localStorage.removeItem('token')
         setLogin(false)
     }

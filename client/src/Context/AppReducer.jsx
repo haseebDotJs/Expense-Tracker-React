@@ -14,6 +14,8 @@ export const AppReducer = (state, action) => {
             return { ...state, error: action.payload }
         case ACTIONS.LOAD:
             return { ...state, loading: true }
+        case ACTIONS.LOGOUT:
+            return { transactions: [],error: null,loading: true}
         default:
             return { ...state }
     }
